@@ -20,8 +20,8 @@
 #include "stm32l475e_iot01_magneto.h"
 #include "stm32l475e_iot01_gyro.h"
 #include "stm32l475e_iot01_accelero.h"
-#include <cstdio>
-#include <cstring>
+#include <stdio.h>
+#include <string.h>
 #include <iostream>
 
 
@@ -72,11 +72,11 @@ void http_demo(NetworkInterface *net)
     SocketAddress a;
     net->get_ip_address(&a);
     printf("IP address: %s\n", a.get_ip_address() ? a.get_ip_address() : "None");
-    printf("Sending request to 192.168.50.254...\n");
+    printf("Sending request to 192.168.1.4...\n");
     // Open a socket on the network interface, and create a TCP connection to
     //www.arm.com
     socket.open(net);
-    net->gethostbyname("192.168.50.254", &a);
+    net->gethostbyname("192.168.1.4", &a);
     a.set_port(3000);
     response = socket.connect(a);
     if(0 != response) {
@@ -86,10 +86,10 @@ void http_demo(NetworkInterface *net)
     }
 
     // Send a simple http request
-    char* sbuffer = "hello";
+    char sbuffer[100] = "hello";
     nsapi_size_t size = strlen(sbuffer);
     response = 0;
-    int count=0;
+    int count=0, sample_num=0;
 
     int16_t pDataXYZ[3] = {0};
     float pGyroDataXYZ[3] = {0};
@@ -108,28 +108,21 @@ void http_demo(NetworkInterface *net)
         printf("ACCELERO_Z = %d\n", pDataXYZ[2]);
 
 
-        // cout << "0" << endl;
         ThisThread::sleep_for(1000);
 
-        cout << "1" << endl;
-        sprintf(sbuffer, "%d", pDataXYZ[0]); 
-        // cout << "2" << endl;
-        size = strlen(sbuffer);
-        // cout << "3" << endl;
+        float ax = pDataXYZ[0], ay = pDataXYZ[1], az = pDataXYZ[2];
+        int len = sprintf(sbuffer,"{\"x\":%f,\"y\":%f,\"z\":%f,\"s\":%d}",(float)((int)(ax*10000))/10000, (float)((int)(ay*10000))/10000, (float)((int)(az*10000))/10000, sample_num);
         printf("%s", sbuffer);
 
-        // float x = pDataXYZ[0], y = pDataXYZ[1], z = pDataXYZ[2];
-        // int len = sprintf(sbuffer,"{\"x\":%f,\"y\":%f,\"z\":%f,\"s\":%d}",(float)((int)(x*10000))/10000, (float)((int)(y*10000))/10000, (float)((int)(z*10000))/10000, sample_num);
-
-
         ++count;
-        response = socket.send(sbuffer, size);
+        sample_num++;
+        response = socket.send(sbuffer, len);
         if (response < 0) {
             printf("Error sending data: %d\n", response);
             socket.close();
             return;
         }
-        //if (count == 100) break;
+        if (count == 50) break;
     }
 
     // Recieve a simple http response and print out the response line
@@ -168,23 +161,4 @@ int main()
     wifi.disconnect();
 
     printf("\nDone\n");
-
-    // int16_t pDataXYZ[3] = {0};
-    // float pGyroDataXYZ[3] = {0};
-
-    // BSP_ACCELERO_Init();
-
-    // while(1)
-    // {
-    //     printf("\nNew loop, LED1 should blink during sensor read\n");
-
-    //     ThisThread::sleep_for(1000);
-
-    //     BSP_ACCELERO_AccGetXYZ(pDataXYZ);
-    //     printf("\nACCELERO_X = %d\n", pDataXYZ[0]);
-    //     printf("ACCELERO_Y = %d\n", pDataXYZ[1]);
-    //     printf("ACCELERO_Z = %d\n", pDataXYZ[2]);
-
-    //     ThisThread::sleep_for(1000);
-    // }
 }

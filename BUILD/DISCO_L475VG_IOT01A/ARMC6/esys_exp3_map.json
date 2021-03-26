@@ -24,7 +24,7 @@
     {
         "module": "[lib]/fz_wm.l",
         "size": {
-            ".text": 1312,
+            ".text": 1538,
             ".data": 0,
             ".bss": 0,
             ".text-delta": 0,
@@ -35,7 +35,7 @@
     {
         "module": "[lib]/libcpp_w.l",
         "size": {
-            ".text": 65805,
+            ".text": 65797,
             ".data": 0,
             ".bss": 2920,
             ".text-delta": 0,
@@ -79,10 +79,10 @@
     {
         "module": "main.o",
         "size": {
-            ".text": 1469,
+            ".text": 1229,
             ".data": 0,
             ".bss": 1309,
-            ".text-delta": 0,
+            ".text-delta": -8,
             ".data-delta": 0,
             ".bss-delta": 0
         }
@@ -223,8 +223,8 @@
         "summary": {
             "static_ram": 19788,
             "static_ram_delta": 0,
-            "total_flash": 175801,
-            "total_flash_delta": 0
+            "total_flash": 175779,
+            "total_flash_delta": -8
         }
     }
 ]
