@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+#include "ThisThread.h"
 #include "mbed.h"
 #include "TCPSocket.h"
 
@@ -39,9 +40,6 @@ SpwfSAInterface wifi(MBED_CONF_APP_WIFI_TX, MBED_CONF_APP_WIFI_RX);
 #endif // MBED_CONF_APP_WIFI_SHIELD == WIFI_IDW0XX1
 
 #endif
-
-
-
 
 
 const char *sec2str(nsapi_security_t sec)
@@ -72,11 +70,11 @@ void http_demo(NetworkInterface *net)
     SocketAddress a;
     net->get_ip_address(&a);
     printf("IP address: %s\n", a.get_ip_address() ? a.get_ip_address() : "None");
-    printf("Sending request to 192.168.1.4...\n");
+    printf("Sending request to 192.168.50.254...\n");
     // Open a socket on the network interface, and create a TCP connection to
     //www.arm.com
     socket.open(net);
-    net->gethostbyname("192.168.1.4", &a);
+    net->gethostbyname("192.168.50.254", &a);
     a.set_port(3000);
     response = socket.connect(a);
     if(0 != response) {
@@ -89,40 +87,58 @@ void http_demo(NetworkInterface *net)
     char sbuffer[100] = "hello";
     nsapi_size_t size = strlen(sbuffer);
     response = 0;
-    int count=0, sample_num=0;
+    int count=0; //, sample_num=0
 
     int16_t pDataXYZ[3] = {0};
     float pGyroDataXYZ[3] = {0};
 
-    BSP_ACCELERO_Init();
+    // BSP_ACCELERO_Init();
+    // BSP_MAGNETO_Init();
+    BSP_GYRO_Init();
+
     
     while(1)
     {
-        printf("\nNew loop, LED1 should blink during sensor read\n");
-
         ThisThread::sleep_for(1000);
 
-        BSP_ACCELERO_AccGetXYZ(pDataXYZ);
-        printf("\nACCELERO_X = %d\n", pDataXYZ[0]);
-        printf("ACCELERO_Y = %d\n", pDataXYZ[1]);
-        printf("ACCELERO_Z = %d\n", pDataXYZ[2]);
+        // BSP_ACCELERO_AccGetXYZ(pDataXYZ);
+        // printf("\nACCELERO_X = %d\n", pDataXYZ[0]);
+        // printf("ACCELERO_Y = %d\n", pDataXYZ[1]);
+        // printf("ACCELERO_Z = %d\n", pDataXYZ[2]);
+
+        BSP_GYRO_GetXYZ(pGyroDataXYZ);
+        printf("\nGYRO_X = %.2f\n", pGyroDataXYZ[0]);
+        printf("GYRO_Y = %.2f\n", pGyroDataXYZ[1]);
+        printf("GYRO_Z = %.2f\n", pGyroDataXYZ[2]);
+
+        ThisThread::sleep_for(100);
+
+        // BSP_MAGNETO_GetXYZ(pDataXYZ);
+        // printf("\nMAGNETO_X = %d\n", pDataXYZ[0]);
+        // printf("MAGNETO_Y = %d\n", pDataXYZ[1]);
+        // printf("MAGNETO_Z = %d\n", pDataXYZ[2]);
 
 
-        ThisThread::sleep_for(1000);
+        // ThisThread::sleep_for(1000);
 
-        float ax = pDataXYZ[0], ay = pDataXYZ[1], az = pDataXYZ[2];
-        int len = sprintf(sbuffer,"{\"x\":%f,\"y\":%f,\"z\":%f,\"s\":%d}",(float)((int)(ax*10000))/10000, (float)((int)(ay*10000))/10000, (float)((int)(az*10000))/10000, sample_num);
+        // float ax = pDataXYZ[0], ay = pDataXYZ[1], az = pDataXYZ[2];
+        // int alen = sprintf(sbuffer,"{\"x\":%.2f,\"y\":%.2f,\"z\":%.2f,\"s\":%d}",(float)((int)(ax*10000))/10000, (float)((int)(ay*10000))/10000, (float)((int)(az*10000))/10000,);
+        // printf("%s", sbuffer);
+        // response = socket.send(sbuffer, alen);
+
+        float gx = pGyroDataXYZ[0], gy = pGyroDataXYZ[1] , gz = pGyroDataXYZ[2];
+        int blen = sprintf(sbuffer,"{\"x\":%.2f,\"y\":%.2f,\"z\":%.2f}",(float)((int)(gx*10000))/10000, (float)((int)(gy*10000))/10000, (float)((int)(gz*10000))/10000);
         printf("%s", sbuffer);
+        response = socket.send(sbuffer, blen);
+
 
         ++count;
-        sample_num++;
-        response = socket.send(sbuffer, len);
-        if (response < 0) {
-            printf("Error sending data: %d\n", response);
-            socket.close();
-            return;
-        }
-        if (count == 50) break;
+        // if (response < 0) {
+        //     printf("Error sending data: %d\n", response);
+        //     socket.close();
+        //     return;
+        // }
+        if (count == 10) break;
     }
 
     // Recieve a simple http response and print out the response line

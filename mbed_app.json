@@ -6,11 +6,11 @@
         },
         "wifi-ssid": {
             "help": "WiFi SSID",
-            "value": "\"Bulooloo\""
+            "value": "\"esys305\""
         },
         "wifi-password": {
             "help": "WiFi Password",
-            "value": "\"bulooloo514\""
+            "value": "\"305305abcd\""
         },
         "wifi-tx": {
             "help": "TX pin for serial connection to external device",

@@ -58,7 +58,7 @@
 #define MBED_CONF_ALT1250_PPP_BAUDRATE                                          115200                                                                                           // set by library:ALT1250_PPP
 #define MBED_CONF_ALT1250_PPP_PROVIDE_DEFAULT                                   0                                                                                                // set by library:ALT1250_PPP
 #define MBED_CONF_APP_WIFI_DATAREADY                                            PE_1                                                                                             // set by application
-#define MBED_CONF_APP_WIFI_PASSWORD                                             "bulooloo514"                                                                                    // set by application
+#define MBED_CONF_APP_WIFI_PASSWORD                                             "305305abcd"                                                                                     // set by application
 #define MBED_CONF_APP_WIFI_RESET                                                PE_8                                                                                             // set by application
 #define MBED_CONF_APP_WIFI_RX                                                   D0                                                                                               // set by application
 #define MBED_CONF_APP_WIFI_SHIELD                                               internal                                                                                         // set by application
@@ -66,7 +66,7 @@
 #define MBED_CONF_APP_WIFI_SPI_MOSI                                             PC_12                                                                                            // set by application
 #define MBED_CONF_APP_WIFI_SPI_NSS                                              PE_0                                                                                             // set by application
 #define MBED_CONF_APP_WIFI_SPI_SCLK                                             PC_10                                                                                            // set by application
-#define MBED_CONF_APP_WIFI_SSID                                                 "Bulooloo"                                                                                       // set by application
+#define MBED_CONF_APP_WIFI_SSID                                                 "esys305"                                                                                        // set by application
 #define MBED_CONF_APP_WIFI_TX                                                   D1                                                                                               // set by application
 #define MBED_CONF_APP_WIFI_WAKEUP                                               PB_12                                                                                            // set by application
 #define MBED_CONF_ATMEL_RF_ASSUME_SPACED_SPI                                    1                                                                                                // set by library:atmel-rf[STM]

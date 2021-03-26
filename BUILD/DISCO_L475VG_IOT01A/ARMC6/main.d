@@ -1,17 +1,18 @@
 BUILD/DISCO_L475VG_IOT01A/ARMC6/main.o: main.cpp \
-  BUILD/DISCO_L475VG_IOT01A/ARMC6/mbed_config.h mbed-os/mbed.h \
+  BUILD/DISCO_L475VG_IOT01A/ARMC6/mbed_config.h \
+  mbed-os/rtos/include/rtos/ThisThread.h \
+  mbed-os/platform/include/platform/mbed_toolchain.h \
+  mbed-os/platform/include/platform/mbed_preprocessor.h \
+  mbed-os/rtos/include/rtos/Kernel.h \
+  mbed-os/rtos/include/rtos/mbed_rtos_types.h \
+  mbed-os/cmsis/CMSIS_5/CMSIS/RTOS2/Include/cmsis_os2.h mbed-os/mbed.h \
   mbed-os/platform/include/platform/mbed_version.h \
   mbed-os/rtos/include/rtos/rtos.h \
   mbed-os/rtos/include/rtos/internal/mbed_rtos_storage.h \
   mbed-os/cmsis/device/rtos/include/mbed_rtx_storage.h \
   mbed-os/cmsis/CMSIS_5/CMSIS/RTOS2/RTX/Include/rtx_os.h \
-  mbed-os/cmsis/CMSIS_5/CMSIS/RTOS2/Include/cmsis_os2.h \
   mbed-os/cmsis/device/rtos/include/mbed_rtx_conf.h \
   mbed-os/targets/TARGET_STM/mbed_rtx.h \
-  mbed-os/rtos/include/rtos/Kernel.h \
-  mbed-os/rtos/include/rtos/mbed_rtos_types.h \
-  mbed-os/platform/include/platform/mbed_toolchain.h \
-  mbed-os/platform/include/platform/mbed_preprocessor.h \
   mbed-os/rtos/include/rtos/Thread.h \
   mbed-os/rtos/include/rtos/internal/mbed_rtos1_types.h \
   mbed-os/cmsis/CMSIS_5/CMSIS/RTOS2/RTX/Include1/cmsis_os.h \
@@ -28,7 +29,6 @@ BUILD/DISCO_L475VG_IOT01A/ARMC6/main.o: main.cpp \
   mbed-os/rtos/include/rtos/Semaphore.h \
   mbed-os/rtos/include/rtos/Mutex.h \
   mbed-os/platform/include/platform/ScopedLock.h \
-  mbed-os/rtos/include/rtos/ThisThread.h \
   mbed-os/rtos/include/rtos/Mail.h mbed-os/rtos/include/rtos/Queue.h \
   mbed-os/platform/include/platform/mbed_error.h \
   mbed-os/platform/include/platform/mbed_retarget.h \
