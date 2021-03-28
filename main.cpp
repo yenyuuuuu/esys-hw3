@@ -93,39 +93,18 @@ void http_demo(NetworkInterface *net)
     float pGyroDataXYZ[3] = {0};
 
     BSP_ACCELERO_Init();
-    // BSP_MAGNETO_Init();
-    // BSP_GYRO_Init();
 
     
     while(1)
     {
 
         BSP_ACCELERO_AccGetXYZ(pDataXYZ);
-        // printf("\nACCELERO_X = %d\n", pDataXYZ[0]);
-        // printf("ACCELERO_Y = %d\n", pDataXYZ[1]);
-        // printf("ACCELERO_Z = %d\n", pDataXYZ[2]);
-
-        // BSP_GYRO_GetXYZ(pGyroDataXYZ);
-        // printf("\nGYRO_X = %.2f\n", pGyroDataXYZ[0]);
-        // printf("GYRO_Y = %.2f\n", pGyroDataXYZ[1]);
-        // printf("GYRO_Z = %.2f\n", pGyroDataXYZ[2]);
-
-
-        // BSP_MAGNETO_GetXYZ(pDataXYZ);
-        // printf("\nMAGNETO_X = %d\n", pDataXYZ[0]);
-        // printf("MAGNETO_Y = %d\n", pDataXYZ[1]);
-        // printf("MAGNETO_Z = %d\n", pDataXYZ[2]);
 
 
         ThisThread::sleep_for(200);
 
         float ax = pDataXYZ[0], ay = pDataXYZ[1], az = pDataXYZ[2]/100;
         int alen = sprintf(sbuffer,"{\"x\":%.2f,\"y\":%.2f,\"z\":%.2f}",(float)((int)(ax*10000))/10000, (float)((int)(ay*10000))/10000, (float)((int)(az*10000))/10000);
-        // printf("%s", sbuffer);
-        // response = socket.send(sbuffer, alen);
-
-        // float gx = pGyroDataXYZ[0], gy = pGyroDataXYZ[1] , gz = pGyroDataXYZ[2];
-        // int blen = sprintf(sbuffer,"{\"x\":%.2f,\"y\":%.2f,\"z\":%.2f}",(float)((int)(gx*10000))/10000, (float)((int)(gy*10000))/10000, (float)((int)(gz*10000))/10000);
         printf("%s, count= %d \n", sbuffer, count);
         response = socket.send(sbuffer, alen);
 
@@ -140,16 +119,6 @@ void http_demo(NetworkInterface *net)
         if (count == 200) break;
     }
 
-    // Recieve a simple http response and print out the response line
-    // char rbuffer[64];
-    // response = socket.recv(rbuffer, sizeof rbuffer);
-    // if (response < 0) {
-    //     printf("Error receiving data: %d\n", response);
-    // } else {
-    //     printf("recv %d [%.*s]\n", response, strstr(rbuffer, "\r\n")-rbuffer, rbuffer);
-    // }
-
-    // Close the socket to return its memory and bring down the network interface
     socket.close();
 }
 
