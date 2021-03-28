@@ -2,9 +2,9 @@
     {
         "module": "BSP_B-L475E-IOT01/Drivers",
         "size": {
-            ".text": 1356,
-            ".data": 156,
-            ".bss": 88,
+            ".text": 738,
+            ".data": 52,
+            ".bss": 80,
             ".text-delta": 0,
             ".data-delta": 0,
             ".bss-delta": 0
@@ -79,10 +79,10 @@
     {
         "module": "main.o",
         "size": {
-            ".text": 1081,
+            ".text": 1033,
             ".data": 0,
             ".bss": 1309,
-            ".text-delta": -12,
+            ".text-delta": 0,
             ".data-delta": 0,
             ".bss-delta": 0
         }
@@ -221,10 +221,10 @@
     },
     {
         "summary": {
-            "static_ram": 19900,
+            "static_ram": 19788,
             "static_ram_delta": 0,
-            "total_flash": 176353,
-            "total_flash_delta": -12
+            "total_flash": 175583,
+            "total_flash_delta": 0
         }
     }
 ]
